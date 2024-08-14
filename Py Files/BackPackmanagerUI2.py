@@ -20,7 +20,6 @@ def StartPerpperBackpackerMananger():
 
     # draggable funrctions for canvvas
 
-
     class DragManager():
         def add_draggable(self, widget):
             widget.bind("<ButtonPress-1>", self.on_start)
@@ -68,6 +67,8 @@ def StartPerpperBackpackerMananger():
 
         def __str__(self):
             return f"{self.name}{self.weight}{self.quanity}"
+
+
 
     # declares item add window
     def ItemAddWindow():
@@ -161,81 +162,97 @@ def StartPerpperBackpackerMananger():
 
 
     print("starting Program")
-    #  creates the program window
-    root = tk.Tk()
-    root.title("Prepper Backpack Manager")
-    root.geometry("800x650")
 
-    # declares the top menu bar
-    topmenubar = Menu(root)
-    root.config(menu = topmenubar)
+    def createMainUI():
+        #  creates the program window
+        root = tk.Tk()
+        root.title("Prepper Backpack Manager")
+        root.geometry("800x650")
 
-    # creates the menu bar at the top
-    filemenu = Menu(root)
+        # declares the top menu bar
+        topmenubar = Menu(root)
+        root.config(menu = topmenubar)
 
-    # prevnts the user fro, dragging the top bar away
-    filemenu = Menu(topmenubar, tearoff=False)
+        # creates the menu bar at the top
+        filemenu = Menu(root)
 
-    # adds the menu to the bar
-    filemenu.add_command(
-        label='Exit',
-        command=root.destroy
-    )
+        # prevnts the user fro, dragging the top bar away
+        filemenu = Menu(topmenubar, tearoff=False)
 
-
-
-    # add the File menu to the menubar and make it visble
-    topmenubar.add_cascade(
-        label="File",
-        menu=filemenu
-
-    )
-
-    # creates the canvas that will have dragable compaonants.
-    BackGroundCanvas = tk.Canvas(root, width=800, height=650, bg="#575555")
-    # declares the toolbar
-    CanvasFrame = ttk.Frame(root, height=800, width=100, bootstyle="info")
-    # mounts to the left of the screen
-    CanvasFrame.pack(side=LEFT)
-    CanvasFrame.propagate(0)
-
-    # declares the top bar for the CanvasFrame
-    CanvasFrameTopBar = ttk.Label(CanvasFrame, text="Toolbar", width=20)
-    CanvasFrameTopBar.pack(side=TOP)
-
-    # declares backpackinfoframe
-    BackPackInfoFrame = ttk.Frame(root, height=200, width=200, bootstyle="info" )
+         # adds the menu to the bar
+        filemenu.add_command(
+            label='Exit',
+            command=root.destroy
+        )
 
 
 
-    # decalres add item button
-    AddItemButton = Button(CanvasFrame, text="Add Item", command=ItemAddWindow)
+        # add the File menu to the menubar and make it visble
+        topmenubar.add_cascade(
+            label="File",
+            menu=filemenu
 
-    # creates the add item button
-    AddItemButton.pack(side=LEFT,)
-    AddItemButton.propagate(0)
+        )
 
-    label = Label(BackGroundCanvas)
-    label.pack()
+        # creates the canvas that will have dragable compaonants.
+        BackGroundCanvas = tk.Canvas(root, width=800, height=650, bg="#575555")
+        # declares the toolbar
+        CanvasFrame = ttk.Frame(root, height=800, width=100, bootstyle="info")
+        # mounts to the left of the screen
+        CanvasFrame.pack(side=LEFT)
+        CanvasFrame.propagate(0)
 
-    BackPackInfoFrame.pack(side=RIGHT)
-    ttk.Button(CanvasFrame, bootstyle="warning")
+        # declares the top bar for the CanvasFrame
+        CanvasFrameTopBar = ttk.Label(CanvasFrame, text="Toolbar", width=20)
+        CanvasFrameTopBar.pack(side=TOP)
+
+        # declares backpackinfoframe
+        BackPackInfoFrame = ttk.Frame(root, height=200, width=200, bootstyle="info" )
 
 
-    dnd = DragManager()
 
-    # add dragable items in this lines
-    dnd.add_draggable(label)
-    dnd.add_draggable(CanvasFrame)
-    dnd.add_draggable(BackPackInfoFrame)
+        # decalres add item button
+        AddItemButton = Button(CanvasFrame, text="Add Item", command=ItemAddWindow)
+
+        # creates the add item button
+        AddItemButton.pack(side=LEFT,)
+        AddItemButton.propagate(0)
+
+        label = Label(BackGroundCanvas)
+        label.pack()
+
+        BackPackInfoFrame.pack(side=RIGHT)
+        ttk.Button(CanvasFrame, bootstyle="warning")
 
 
-    BackGroundCanvas.pack(side=LEFT)
-    CanvasFrame.pack()
+        dnd = DragManager()
 
-    # starts the tkinter main loop for rendering.
-    root.mainloop()
+        # add dragable items in this lines
+        dnd.add_draggable(label)
+        dnd.add_draggable(CanvasFrame)
+        dnd.add_draggable(BackPackInfoFrame)
 
+
+        BackGroundCanvas.pack(side=LEFT)
+        CanvasFrame.pack()
+
+        # starts the tkinter main loop for rendering.
+        root.mainloop()
+
+    # checsk to see if Item.bpm file exists.
+    if OS.exists("Items.bpm"):
+
+        # opens the Items.BPM file for reading
+        ItemDataRead = open('Items.bpm', 'r')
+
+        # reads the lines of Items.BPM via the varibale ItemDataRead
+        Lines = ItemDataRead.readlines()
+
+        # prints the values of ItemDataRead via Lines vraible
+        print(Lines)
+
+        #calls the create main UI Function
+        createMainUI()
 #the program runs this function on the start of the program
 def FirstStart():
 
