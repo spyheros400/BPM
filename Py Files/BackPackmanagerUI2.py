@@ -206,9 +206,21 @@ def StartPerpperBackpackerMananger():
         CanvasFrameTopBar = ttk.Label(CanvasFrame, text="Toolbar", width=20)
         CanvasFrameTopBar.pack(side=TOP)
 
-        # declares backpackinfoframe
-        BackPackInfoFrame = ttk.Frame(root, height=200, width=200, bootstyle="info" )
+        # declares ItemInfoFrame
+        ItemInfoFrame = ttk.Frame(root, height=400, width=400, bootstyle="info" )
 
+        ItemInfoScrollBar = tk.Scrollbar(ItemInfoFrame, width=100, orient="horizontal")
+        ItemInfoScrollBar.place(x=170, y=0)
+
+        # creates Item Buttons
+
+        for ItemButton in range(len(Lines)):
+            # needs to create the button and name then based off how msny items are in the lentgh and
+            # and name then based of of Item Title
+            first = ItemDataRead.readline()
+            Itembutton = tk.Button(ItemInfoFrame, text=first, width=20)
+            Itembutton.pack()
+            print(first)
 
 
         # decalres add item button
@@ -221,7 +233,7 @@ def StartPerpperBackpackerMananger():
         label = Label(BackGroundCanvas)
         label.pack()
 
-        BackPackInfoFrame.pack(side=RIGHT)
+
         ttk.Button(CanvasFrame, bootstyle="warning")
 
 
@@ -230,8 +242,9 @@ def StartPerpperBackpackerMananger():
         # add dragable items in this lines
         dnd.add_draggable(label)
         dnd.add_draggable(CanvasFrame)
-        dnd.add_draggable(BackPackInfoFrame)
+        dnd.add_draggable(ItemInfoFrame)
 
+        ItemInfoFrame.pack(side=RIGHT)
 
         BackGroundCanvas.pack(side=LEFT)
         CanvasFrame.pack()
@@ -253,6 +266,7 @@ def StartPerpperBackpackerMananger():
 
         #calls the create main UI Function
         createMainUI()
+
 #the program runs this function on the start of the program
 def FirstStart():
 
