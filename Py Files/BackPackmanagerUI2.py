@@ -1,6 +1,6 @@
 # bryan block 7/30/2024 1:53 PM
 # Prepper manager
-
+import os
 import tkinter as tk
 import os.path as OS
 from tkinter import Menu
@@ -95,17 +95,24 @@ def StartPerpperBackpackerMananger():
                 # appends the document so that previous data will stay
                 with open("Items.bpm", "a") as saveitems:
 
-                    # writes a space
-                    saveitems.write("\n")
 
                     # puts items into an array
                     Itemdata = np.array([ItemTitle, ItemWeightInp, ItemQuanityinp])
 
+                    # writes a space
+                    saveitems.write("\n")
+                    
                     # converts array to string
                     convertTostring = str(Itemdata)
 
+
+
+                    pym.dump(convertTostring, saveitems)
+
+
+
                     # writes araray
-                    saveitems.write(convertTostring)
+                    # saveitems.write(convertTostring)
 
                     # closes the write
                     saveitems.close()
@@ -122,9 +129,19 @@ def StartPerpperBackpackerMananger():
 
                     # converts array to string
                     convertTostring = str(Itemdata)
+                                 
+                    # Dumps the array
+                    pym.dump(convertTostring, saveitems)
+
+                    # erase later
+                    # converts array to string
+
 
                     # writes araray
-                    saveitems.write(convertTostring)
+                    # saveitems.write(ItemJsonSave)
+                    
+                    
+
 
                     # closes the write
                     saveitems.close()
@@ -213,14 +230,15 @@ def StartPerpperBackpackerMananger():
         ItemInfoScrollBar.place(x=170, y=0)
 
         # creates Item Buttons
-
-        for ItemButton in range(len(Lines)):
-            # needs to create the button and name then based off how msny items are in the lentgh and
-            # and name then based of of Item Title
-            first = ItemDataRead.readline()
-            Itembutton = tk.Button(ItemInfoFrame, text=first, width=20)
-            Itembutton.pack()
-            print(first)
+        def ItemButtonCreation():
+            if OS.exists("Items.bpm"):
+                for ItemButton in range(len(Lines)):
+                    #needs to create the button and name then based off how msny items are in the lentgh and
+                    # and name then based of of Item Title
+                    first = ItemDataRead.readline()
+                    Itembutton = tk.Button(ItemInfoFrame, text=first, width=20)
+                    Itembutton.pack()
+                    print(first)
 
 
         # decalres add item button
@@ -254,7 +272,6 @@ def StartPerpperBackpackerMananger():
 
     # checsk to see if Item.bpm file exists.
     if OS.exists("Items.bpm"):
-
         # opens the Items.BPM file for reading
         ItemDataRead = open('Items.bpm', 'r')
 
@@ -267,8 +284,15 @@ def StartPerpperBackpackerMananger():
         #calls the create main UI Function
         createMainUI()
 
+    else:
+        createMainUI()
+
 #the program runs this function on the start of the program
+
+
 def FirstStart():
+
+
 
     if OS.exists("Registration.xml"):
         print("file exists")
@@ -278,6 +302,25 @@ def FirstStart():
 
 
     else:
+        #def regwindowcreate():
+            # starts the tkinter window
+        RegFrame = tk.Tk()
+        RegFrame.title("first start")
+        RegFrame.geometry("400x400")
+
+            # gets the input of the owner
+
+            # TextBox Creation
+
+        inputnametxt = tk.Text(RegFrame, height=2, width=20, )
+
+        inputnametxt.insert("insert", "your name")
+
+        inputnametxt.place(x=10, y=0)
+
+
+
+
 
         def getOwnerInput():
             # declares inp to to get whatever is in the textbox  inputnametext
@@ -291,35 +334,21 @@ def FirstStart():
             Ownerinfo.close()
 
             # destroys the frame
-            frame.destroy()
+            RegFrame.destroy()
             # calls first start function agin with registartion already save in previous function
             FirstStart()
 
-
-
-        # starts the tkinter window
-        frame = tk.Tk()
-        frame.title ("first start")
-        frame.geometry("400x400")
-
-        # gets the input of the owner
-
-
-    # TextBox Creation
-
-    inputnametxt = tk.Text(frame,
-                    height=2,
-                    width=20,)
-
-    inputnametxt.insert("insert", "your name")
-
-    inputnametxt.place(x=10, y=0)
-
-
+        #regwindowcreate()
         # creates the get owner info button
-    getOwnerInfoButton = tk.Button(frame, text="confirm", command=getOwnerInput)
-    getOwnerInfoButton.place(x= 300, y=350)
+        getOwnerInfoButton = tk.Button(RegFrame, text="confirm", command=getOwnerInput)
+        getOwnerInfoButton.place(x=300, y=350)
 
-    frame.mainloop()
+        RegFrame.mainloop()
+
+
+
+
+
+
 
 FirstStart()
