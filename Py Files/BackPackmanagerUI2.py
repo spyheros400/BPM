@@ -88,6 +88,17 @@ def StartPerpperBackpackerMananger():
 
             # Save System for items into items.bpm
 
+            ItemsInfo = {
+                "Title": ItemTitle,
+                "Weight": ItemWeightInp,
+                "Quanity": ItemQuanityinp,
+            }
+
+            # Creates a dict
+            Itemdata = {
+                "Items": [ItemsInfo]
+            }
+
             # if items.bpm exists the prgram will use this line
             if OS.exists("Items.json"):
 
@@ -95,20 +106,17 @@ def StartPerpperBackpackerMananger():
                 with open("Items.json", "a") as saveitems:
 
                     # creates the info that will be saved in ItemsData
-                    ItemsInfo = {
+                    ItemsInfoupdate = {
                      "Title": ItemTitle,
                      "Weight": ItemWeightInp,
                      "Quanity": ItemQuanityinp,
                         }
 
-                    # Creates a dict
-                    Itemdata = {
-                        "Items" : [ItemsInfo]
-                    },
+
+                    merged_dict = {key: value for (key, value) in (Itemdata.items() + ItemsInfoupdate.items())}
 
 
-
-                    pym.dump(Itemdata, saveitems)
+                    pym.dump(merged_dict, saveitems)
 
 
 
@@ -126,16 +134,6 @@ def StartPerpperBackpackerMananger():
                 with open("Items.json", "w") as saveitems:
 
                     # creates the info that will be saved in ItemsData
-                    ItemsInfo = {
-                        "Title": ItemTitle,
-                        "Weight": ItemWeightInp,
-                        "Quanity": ItemQuanityinp,
-                    }
-
-                    # Creates a dict
-                    Itemdata = {
-                        "Items": [ItemsInfo]
-                    }
                                  
                     # Dumps the array
                     pym.dump(Itemdata, saveitems)
