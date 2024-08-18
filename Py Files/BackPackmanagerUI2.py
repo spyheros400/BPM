@@ -5,7 +5,6 @@ import tkinter as tk
 import os.path as OS
 from tkinter import Menu
 from tkinter import *
-from RoundedTk import *
 import xml.etree.cElementTree as ET
 import ttkbootstrap as ttk
 import numpy as np
@@ -90,24 +89,26 @@ def StartPerpperBackpackerMananger():
             # Save System for items into items.bpm
 
             # if items.bpm exists the prgram will use this line
-            if OS.exists("Items.bpm"):
+            if OS.exists("Items.json"):
 
                 # appends the document so that previous data will stay
-                with open("Items.bpm", "a") as saveitems:
+                with open("Items.json", "a") as saveitems:
+
+                    # creates the info that will be saved in ItemsData
+                    ItemsInfo = {
+                     "Title": ItemTitle,
+                     "Weight": ItemWeightInp,
+                     "Quanity": ItemQuanityinp,
+                        }
+
+                    # Creates a dict
+                    Itemdata = {
+                        "Items" : [ItemsInfo]
+                    },
 
 
-                    # puts items into an array
-                    Itemdata = np.array([ItemTitle, ItemWeightInp, ItemQuanityinp])
 
-                    # writes a space
-                    saveitems.write("\n")
-                    
-                    # converts array to string
-                    convertTostring = str(Itemdata)
-
-
-
-                    pym.dump(convertTostring, saveitems)
+                    pym.dump(Itemdata, saveitems)
 
 
 
@@ -122,16 +123,22 @@ def StartPerpperBackpackerMananger():
 
             # else used for first time writing to a new project
             else:
-                with open("Items.bpm", "w") as saveitems:
+                with open("Items.json", "w") as saveitems:
 
-                    # puts items into an array
-                    Itemdata = np.array([ItemTitle, ItemWeightInp, ItemQuanityinp])
+                    # creates the info that will be saved in ItemsData
+                    ItemsInfo = {
+                        "Title": ItemTitle,
+                        "Weight": ItemWeightInp,
+                        "Quanity": ItemQuanityinp,
+                    }
 
-                    # converts array to string
-                    convertTostring = str(Itemdata)
+                    # Creates a dict
+                    Itemdata = {
+                        "Items": [ItemsInfo]
+                    }
                                  
                     # Dumps the array
-                    pym.dump(convertTostring, saveitems)
+                    pym.dump(Itemdata, saveitems)
 
                     # erase later
                     # converts array to string
@@ -231,14 +238,33 @@ def StartPerpperBackpackerMananger():
 
         # creates Item Buttons
         def ItemButtonCreation():
-            if OS.exists("Items.bpm"):
+            if OS.exists("Items.json"):
+                # Opening JSON file
+                f = open('Items.json')
+
+                # returns JSON object as
+                # a dictionary
+                datanew = pym.load(f)
+
                 for ItemButton in range(len(Lines)):
                     #needs to create the button and name then based off how msny items are in the lentgh and
                     # and name then based of of Item Title
-                    first = ItemDataRead.readline()
-                    Itembutton = tk.Button(ItemInfoFrame, text=first, width=20)
-                    Itembutton.pack()
-                    print(first)
+
+
+
+                    # Iterating through the json
+                    # list
+                    for i in datanew['Items']:
+                        print(i)
+
+
+
+                        Itembutton = tk.Button(ItemInfoFrame, text="test", width=20)
+                        Itembutton.pack()
+                        print(f)
+
+                        # Closing file
+                        f.close()
 
 
         # decalres add item button
@@ -267,13 +293,15 @@ def StartPerpperBackpackerMananger():
         BackGroundCanvas.pack(side=LEFT)
         CanvasFrame.pack()
 
+        ItemButtonCreation()
+
         # starts the tkinter main loop for rendering.
         root.mainloop()
 
     # checsk to see if Item.bpm file exists.
-    if OS.exists("Items.bpm"):
+    if OS.exists("Items.json"):
         # opens the Items.BPM file for reading
-        ItemDataRead = open('Items.bpm', 'r')
+        ItemDataRead = open('Items.json', 'r')
 
         # reads the lines of Items.BPM via the varibale ItemDataRead
         Lines = ItemDataRead.readlines()
@@ -283,6 +311,8 @@ def StartPerpperBackpackerMananger():
 
         #calls the create main UI Function
         createMainUI()
+
+        ItemDataRead.close()
 
     else:
         createMainUI()
