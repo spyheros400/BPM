@@ -105,18 +105,17 @@ def StartPerpperBackpackerMananger():
                 # appends the document so that previous data will stay
                 with open("Items.json", "a") as saveitems:
 
+
+
                     # creates the info that will be saved in ItemsData
                     ItemsInfoupdate = {
                      "Title": ItemTitle,
                      "Weight": ItemWeightInp,
                      "Quanity": ItemQuanityinp,
-                        }
+                    }
 
 
-                    merged_dict = {key: value for (key, value) in (Itemdata.items() + ItemsInfoupdate.items())}
-
-
-                    pym.dump(merged_dict, saveitems)
+                    pym.dump(ItemsInfoupdate, saveitems, indent=2)
 
 
 
@@ -299,13 +298,14 @@ def StartPerpperBackpackerMananger():
     # checsk to see if Item.bpm file exists.
     if OS.exists("Items.json"):
         # opens the Items.BPM file for reading
-        ItemDataRead = open('Items.json', 'r')
+        with open('Items.json', encoding='utf8') as ItemDataRead:
 
-        # reads the lines of Items.BPM via the varibale ItemDataRead
-        Lines = ItemDataRead.readlines()
+            # reads the lines of Items.BPM via the varibale ItemDataRead
+            Lines = pym.load(ItemDataRead)
+            print(len(Lines["Items"][0]))
 
-        # prints the values of ItemDataRead via Lines vraible
-        print(Lines)
+            # prints the values of ItemDataRead via Lines vraible
+            print(Lines)
 
         #calls the create main UI Function
         createMainUI()
