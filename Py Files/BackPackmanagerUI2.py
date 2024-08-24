@@ -251,12 +251,12 @@ def StartPerpperBackpackerMananger():
 
                     # Iterating through the json
                     # list
-                    for i in datanew['Items']:
+                    for i in datanew["Items"]:
                         print(i)
 
 
 
-                        Itembutton = tk.Button(ItemInfoFrame, text="test", width=20)
+                        Itembutton = tk.Button(ItemInfoFrame, text=datanew, width=20)
                         Itembutton.pack()
                         print(f)
 
