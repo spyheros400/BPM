@@ -237,31 +237,37 @@ def StartPerpperBackpackerMananger():
         def ItemButtonCreation():
             if OS.exists("Items.json"):
                 # Opening JSON file
-                f = open('Items.json')
+                with open('Items.json', encoding='utf8') as f:
+                #f = open('Items.json')
 
                 # returns JSON object as
                 # a dictionary
-                datanew = pym.load(f)
+                    datanew = pym.load(f)
+                    print(datanew)
 
                 for ItemButton in range(len(Lines)):
                     #needs to create the button and name then based off how msny items are in the lentgh and
                     # and name then based of of Item Title
 
 
-
                     # Iterating through the json
                     # list
-                    for i in datanew["Items"]:
-                        print(i)
 
 
 
-                        Itembutton = tk.Button(ItemInfoFrame, text=datanew, width=20)
+
+                        newdata = str((datanew["Items"][0]["Title"]))
+                        #for i in datanew['']:
+                        print(newdata)
+
+
+
+                        Itembutton = tk.Button(ItemInfoFrame, text=newdata, width=20)
                         Itembutton.pack()
-                        print(f)
+                        #print(f)
 
                         # Closing file
-                        f.close()
+                        #f.close()
 
 
         # decalres add item button
@@ -302,7 +308,7 @@ def StartPerpperBackpackerMananger():
 
             # reads the lines of Items.BPM via the varibale ItemDataRead
             Lines = pym.load(ItemDataRead)
-            print(len(Lines["Items"][0]))
+            print(len(Lines["Items"]))
 
             # prints the values of ItemDataRead via Lines vraible
             print(Lines)
