@@ -238,36 +238,39 @@ def StartPerpperBackpackerMananger():
             if OS.exists("Items.json"):
                 # Opening JSON file
                 with open('Items.json', encoding='utf8') as f:
-                #f = open('Items.json')
+                    f = open('Items.json')
 
                 # returns JSON object as
                 # a dictionary
+
                     datanew = pym.load(f)
                     print(datanew)
-
-                for ItemButton in range(len(Lines)):
-                    #needs to create the button and name then based off how msny items are in the lentgh and
-                    # and name then based of of Item Title
-
 
                     # Iterating through the json
                     # list
 
+                    # converts from json to python and tells the stirng the "Title"
 
+                    newdata = str((datanew["Items"][0]["Title"]))
+                    # for i in datanew['']:
+                    print(newdata)
 
-
-                        newdata = str((datanew["Items"][0]["Title"]))
-                        #for i in datanew['']:
-                        print(newdata)
-
-
-
+                    def buttoonCreation():
+                        # creates the Buttons
                         Itembutton = tk.Button(ItemInfoFrame, text=newdata, width=20)
                         Itembutton.pack()
-                        #print(f)
+                        print(f)
 
                         # Closing file
-                        #f.close()
+
+                # sets the number of buttons depending on objects in the jason file
+                    for ItemButton in range(NumButtonLinesB):
+                        #needs to create the button and name then based off how msny items are in the lentgh and
+                        # and name then based of of Item Title
+                        buttoonCreation()
+
+                        # Closing file
+                        f.close()
 
 
         # decalres add item button
@@ -309,6 +312,9 @@ def StartPerpperBackpackerMananger():
             # reads the lines of Items.BPM via the varibale ItemDataRead
             Lines = pym.load(ItemDataRead)
             print(len(Lines["Items"]))
+
+            #Gets the lentgh of the items and puts them into the number of lines varaible
+            NumButtonLinesB = len(Lines["Items"])
 
             # prints the values of ItemDataRead via Lines vraible
             print(Lines)
