@@ -103,27 +103,18 @@ def StartPerpperBackpackerMananger():
             if OS.exists("Items.json"):
 
                 # appends the document so that previous data will stay
-                with open("Items.json", "a") as saveitems:
 
+                with (open("Items.json", "r") as jsonFile):
+                    data = pym.load(jsonFile)
 
+                data["location"] = "NewPath"
 
-                    # creates the info that will be saved in ItemsData
-                    ItemsInfoupdate = {
-                     "Title": ItemTitle,
-                     "Weight": ItemWeightInp,
-                     "Quanity": ItemQuanityinp,
-                    }
+                with open("Items.json", "a") as jsonFile:
+                    pym.dump(data, jsonFile)
 
-
-                    pym.dump(ItemsInfoupdate, saveitems, indent=2)
-
-
-
-                    # writes araray
-                    # saveitems.write(convertTostring)
 
                     # closes the write
-                    saveitems.close()
+                    jsonFile.close()
 
                     # closes window
                     ItemaddWindowTK.destroy()
@@ -249,15 +240,22 @@ def StartPerpperBackpackerMananger():
                     # Iterating through the json
                     # list
 
+
+                    # the array that is incremented
+                    ArrayVar = 0
+
                     # converts from json to python and tells the stirng the "Title"
 
-                    newdata = str((datanew["Items"][0]["Title"]))
-                    # for i in datanew['']:
-                    print(newdata)
+
+
+
+
 
                     def buttoonCreation():
                         # creates the Buttons
                         Itembutton = tk.Button(ItemInfoFrame, text=newdata, width=20)
+
+
                         Itembutton.pack()
                         print(f)
 
@@ -265,9 +263,17 @@ def StartPerpperBackpackerMananger():
 
                 # sets the number of buttons depending on objects in the jason file
                     for ItemButton in range(NumButtonLinesB):
-                        #needs to create the button and name then based off how msny items are in the lentgh and
+
+                        # creates the button and gets the index
+                        newdata = str((datanew["Items"][ArrayVar]["Title"]))
+                        # for i in datanew['']:
+                        print(newdata)
+
                         # and name then based of of Item Title
                         buttoonCreation()
+
+                        # ARRAY IS INCREMENTED right here
+                        ArrayVar = ArrayVar + 1
 
                         # Closing file
                         f.close()
