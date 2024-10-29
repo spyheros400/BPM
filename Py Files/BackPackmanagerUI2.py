@@ -9,6 +9,7 @@ import xml.etree.cElementTree as ET
 import ttkbootstrap as ttk
 import numpy as np
 import json as pym
+import yaml as pyaml
 
 
 # global veriables
@@ -104,13 +105,15 @@ def StartPerpperBackpackerMananger():
 
                 # appends the document so that previous data will stay
 
-                with (open("Items.json", "r") as jsonFile):
-                    data = pym.load(jsonFile)
+
+
+                with (open("Items.yaml", "r") as jsonFile):
+                    data = pyaml.load(jsonFile)
 
                 data["location"] = "NewPath"
 
-                with open("Items.json", "a") as jsonFile:
-                    pym.dump(data, jsonFile)
+                with open("Items.yaml", "a") as jsonFile:
+                    pyaml.append(data, jsonFile)
 
 
                     # closes the write
@@ -121,12 +124,12 @@ def StartPerpperBackpackerMananger():
 
             # else used for first time writing to a new project
             else:
-                with open("Items.json", "w") as saveitems:
+                with open("Items.yaml", "w") as saveitems:
 
                     # creates the info that will be saved in ItemsData
                                  
                     # Dumps the array
-                    pym.dump(Itemdata, saveitems)
+                    pyaml.dump(Itemdata, saveitems)
 
                     # erase later
                     # converts array to string
@@ -226,16 +229,17 @@ def StartPerpperBackpackerMananger():
 
         # creates Item Buttons
         def ItemButtonCreation():
-            if OS.exists("Items.json"):
+            if OS.exists("Items.yaml"):
                 # Opening JSON file
-                with open('Items.json', encoding='utf8') as f:
-                    f = open('Items.json')
+                with open('Items.yaml', encoding='utf8') as f:
+                    prime_service = pyaml.safe_load(f)
+
+
+
+
 
                 # returns JSON object as
                 # a dictionary
-
-                    datanew = pym.load(f)
-                    print(datanew)
 
                     # Iterating through the json
                     # list
@@ -265,7 +269,7 @@ def StartPerpperBackpackerMananger():
                     for ItemButton in range(NumButtonLinesB):
 
                         # creates the button and gets the index
-                        newdata = str((datanew["Items"][ArrayVar]["Title"]))
+                        newdata = str(prime_service)
                         # for i in datanew['']:
                         print(newdata)
 
@@ -316,7 +320,7 @@ def StartPerpperBackpackerMananger():
         with open('Items.json', encoding='utf8') as ItemDataRead:
 
             # reads the lines of Items.BPM via the varibale ItemDataRead
-            Lines = pym.load(ItemDataRead)
+            Lines = pyaml.load(ItemDataRead)
             print(len(Lines["Items"]))
 
             #Gets the lentgh of the items and puts them into the number of lines varaible
