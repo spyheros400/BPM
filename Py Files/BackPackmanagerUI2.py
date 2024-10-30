@@ -11,12 +11,15 @@ import numpy as np
 import json as pym
 import yaml as pyaml
 
+ItemIDNum = 0
 
 # global veriables
 Name = "NONAME"
 
 # function that starts the program.
 def StartPerpperBackpackerMananger():
+
+
 
     # draggable funrctions for canvvas
 
@@ -77,6 +80,8 @@ def StartPerpperBackpackerMananger():
 
         def getinput():
 
+            global ItemIDNum
+
             ItemInstance = Item
 
             # if Item des num = amount of entries in file the ++
@@ -95,25 +100,32 @@ def StartPerpperBackpackerMananger():
                 "Quanity": ItemQuanityinp,
             }
 
+            # integer value that incremnts with ID Number
+
+            # Converts ITemIDNum to string
+            IDNum = str(ItemIDNum)
+
             # Creates a dict
             Itemdata = {
-                "Items": [ItemsInfo]
+                "ItemID" + " " + IDNum :  [ItemsInfo]
             }
 
+            ItemIDNum + 1
+
             # if items.bpm exists the prgram will use this line
-            if OS.exists("Items.json"):
+            if OS.exists("Items.yaml"):
 
                 # appends the document so that previous data will stay
 
 
 
                 with (open("Items.yaml", "r") as jsonFile):
-                    data = pyaml.load(jsonFile)
+                    data = pyaml.safe_load(jsonFile)
 
                 data["location"] = "NewPath"
 
                 with open("Items.yaml", "a") as jsonFile:
-                    pyaml.append(data, jsonFile)
+                    pyaml.dump(data, jsonFile)
 
 
                     # closes the write
@@ -129,7 +141,8 @@ def StartPerpperBackpackerMananger():
                     # creates the info that will be saved in ItemsData
                                  
                     # Dumps the array
-                    pyaml.dump(Itemdata, saveitems)
+                    pyaml.safe_dump(Itemdata, saveitems)
+
 
                     # erase later
                     # converts array to string
@@ -231,7 +244,7 @@ def StartPerpperBackpackerMananger():
         def ItemButtonCreation():
             if OS.exists("Items.yaml"):
                 # Opening JSON file
-                with open('Items.yaml', encoding='utf8') as f:
+                with open('Items.yaml', "r") as f:
                     prime_service = pyaml.safe_load(f)
 
 
@@ -247,6 +260,8 @@ def StartPerpperBackpackerMananger():
 
                     # the array that is incremented
                     ArrayVar = 0
+
+                    IDNumConvert = str(ArrayVar)
 
                     # converts from json to python and tells the stirng the "Title"
 
@@ -265,11 +280,14 @@ def StartPerpperBackpackerMananger():
 
                         # Closing file
 
-                # sets the number of buttons depending on objects in the jason file
-                    for ItemButton in range(NumButtonLinesB):
 
+
+                # sets the number of buttons depending on objects in the jason file
+                    for Itembutton in range(NumButtonLinesB):
+
+                        print(prime_service)
                         # creates the button and gets the index
-                        newdata = str(prime_service)
+                        newdata = prime_service["ItemID" + IDNumConvert]["Title"]
                         # for i in datanew['']:
                         print(newdata)
 
@@ -315,16 +333,16 @@ def StartPerpperBackpackerMananger():
         root.mainloop()
 
     # checsk to see if Item.bpm file exists.
-    if OS.exists("Items.json"):
+    if OS.exists("Items.yaml"):
         # opens the Items.BPM file for reading
-        with open('Items.json', encoding='utf8') as ItemDataRead:
+        with open('Items.yaml', "r") as ItemDataRead:
 
             # reads the lines of Items.BPM via the varibale ItemDataRead
-            Lines = pyaml.load(ItemDataRead)
-            print(len(Lines["Items"]))
+            Lines = pyaml.safe_load(ItemDataRead)
 
             #Gets the lentgh of the items and puts them into the number of lines varaible
-            NumButtonLinesB = len(Lines["Items"])
+            NumButtonLinesB = len(Lines)
+            print(NumButtonLinesB)
 
             # prints the values of ItemDataRead via Lines vraible
             print(Lines)
