@@ -244,7 +244,7 @@ def StartPerpperBackpackerMananger():
         def ItemButtonCreation():
             if OS.exists("Items.yaml"):
                 # Opening JSON file
-                with open('Items.yaml', "r") as f:
+                with (open('Items.yaml', "r") as f):
                     prime_service = pyaml.safe_load(f)
 
 
@@ -261,7 +261,9 @@ def StartPerpperBackpackerMananger():
                     # the array that is incremented
                     ArrayVar = 0
 
-                    IDNumConvert = str(ArrayVar)
+                    IDNumConvert = (ArrayVar)
+
+                    dog = slice(IDNumConvert)
 
                     # converts from json to python and tells the stirng the "Title"
 
@@ -286,8 +288,9 @@ def StartPerpperBackpackerMananger():
                     for Itembutton in range(NumButtonLinesB):
 
                         print(prime_service)
-                        # creates the button and gets the index
-                        newdata = prime_service["ItemID" + IDNumConvert]["Title"]
+                    # creates the button and gets the index
+                        newdata = prime_service("ItemID" "Title")
+                        "ItemID" "Title"
                         # for i in datanew['']:
                         print(newdata)
 
