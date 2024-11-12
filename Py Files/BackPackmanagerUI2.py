@@ -288,12 +288,18 @@ def StartPerpperBackpackerMananger():
                     for Itembutton in range(NumButtonLinesB):
 
                         print(prime_service)
-                    # creates the button and gets the index
 
-                        if
-                        newdata = str(prime_service["ItemID"][ArrayVar]["Title"])
-                        # for i in datanew['']:
-                        print(newdata)
+                        # converts the Item and arrayvar to a string to combine the two for finding the items in Items.yml as a string.
+                        ItemNumCalculation = "Item" + str(ArrayVar)
+
+                        print(ItemNumCalculation)
+
+                        # this if statement checsk to see the title and numbber of items in the Items.yml file for use in creating the buttons.
+                        if ItemNumCalculation in prime_service:
+                            newdata = prime_service[ItemNumCalculation]["Title"]
+                            print(newdata)
+                            ArrayVar + 1
+
 
                         # and name then based of of Item Title
                         buttoonCreation()
