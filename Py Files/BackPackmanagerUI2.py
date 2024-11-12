@@ -107,7 +107,7 @@ def StartPerpperBackpackerMananger():
 
             # Creates a dict
             Itemdata = {
-                "ItemID" + " " + IDNum :  [ItemsInfo]
+                "ItemID" + IDNum :  [ItemsInfo]
             }
 
             ItemIDNum + 1
@@ -289,8 +289,9 @@ def StartPerpperBackpackerMananger():
 
                         print(prime_service)
                     # creates the button and gets the index
-                        newdata = prime_service("ItemID" "Title")
-                        "ItemID" "Title"
+
+                        if
+                        newdata = str(prime_service["ItemID"][ArrayVar]["Title"])
                         # for i in datanew['']:
                         print(newdata)
 
