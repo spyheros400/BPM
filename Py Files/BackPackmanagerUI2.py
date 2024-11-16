@@ -15,8 +15,11 @@ ItemIDNum = 0
 
 # global veriables
 Name = "NONAME"
+Namevar = ""
 
 # function that starts the program.
+
+
 def StartPerpperBackpackerMananger():
 
 
@@ -71,7 +74,7 @@ def StartPerpperBackpackerMananger():
         def __str__(self):
             return f"{self.name}{self.weight}{self.quanity}"
 
-
+    # coomand to allow items buttons.
 
     # declares item add window
     def ItemAddWindow():
@@ -247,16 +250,7 @@ def StartPerpperBackpackerMananger():
                 with (open('Items.yaml', "r") as f):
                     prime_service = pyaml.safe_load(f)
 
-
-
-
-
-                # returns JSON object as
-                # a dictionary
-
-                    # Iterating through the json
-                    # list
-
+                    \
 
                     # the array that is incremented
                     ArrayVar = 0
@@ -273,8 +267,40 @@ def StartPerpperBackpackerMananger():
 
 
                     def buttoonCreation():
-                        # creates the Buttons
-                        Itembutton = tk.Button(ItemInfoFrame, text=newdata, width=20)
+                        namex = "none"
+
+                        # the value that increments
+                        IterationVar2 = 0
+                        def itemButtonCall(namee):
+
+                            with (open('Items.yaml', "r") as f):
+                                itemInofoLoad = pyaml.safe_load(f)
+
+
+
+
+                                # Combines ItnerationVar and string Item
+                                ItemNumCalculation2 = "Item" + str(IterationVar2)
+                                print(IterationVar2)
+
+                                newdata2 = ItemNumCalculation2
+                                findtitle = namee
+                                print(findtitle)
+
+                            while findtitle == newdata2:
+
+                                if ItemNumCalculation2 in itemInofoLoad:
+                                    newdata2 = ItemNumCalculation2[ItemNumCalculation2]["Title"]
+                                    print(newdata)
+                                    IterationVar2 + 1
+                            return  namee
+
+                        CallCommand = (lambda: itemButtonCall(namex))
+
+                        # creates the Buttons and lmbda function that sets the x
+                        Itembutton = tk.Button(ItemInfoFrame, width=20, text=newdata, command=CallCommand)
+                        namex = Itembutton.cget("text")
+
 
 
                         Itembutton.pack()
@@ -284,7 +310,8 @@ def StartPerpperBackpackerMananger():
 
 
 
-                # sets the number of buttons depending on objects in the jason file
+
+                # sets the number of buttons depending on objects in the items.yaml file
                     for Itembutton in range(NumButtonLinesB):
 
                         print(prime_service)
