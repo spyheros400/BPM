@@ -250,8 +250,6 @@ def StartPerpperBackpackerMananger():
                 with (open('Items.yaml', "r") as f):
                     prime_service = pyaml.safe_load(f)
 
-                    \
-
                     # the array that is incremented
                     ArrayVar = 0
 
@@ -262,45 +260,40 @@ def StartPerpperBackpackerMananger():
                     # converts from json to python and tells the stirng the "Title"
 
 
-
-
-
-
                     def buttoonCreation():
                         namex = "none"
 
-                        # the value that increments
-                        IterationVar2 = 0
-                        def itemButtonCall(namee):
+                        def itemButtonCall(namee, iteratevalue):
 
                             with (open('Items.yaml', "r") as f):
                                 itemInofoLoad = pyaml.safe_load(f)
 
-
+                                # the value that increments
 
 
                                 # Combines ItnerationVar and string Item
-                                ItemNumCalculation2 = "Item" + str(IterationVar2)
-                                print(IterationVar2)
+                                ItemNumCalculation2 = "Item" + str(iteratevalue)
 
-                                newdata2 = ItemNumCalculation2
                                 findtitle = namee
+                                newdata2 = ItemNumCalculation2
                                 print(findtitle)
+                                while findtitle != newdata2:
 
-                            while findtitle == newdata2:
 
-                                if ItemNumCalculation2 in itemInofoLoad:
-                                    newdata2 = ItemNumCalculation2[ItemNumCalculation2]["Title"]
-                                    print(newdata)
-                                    IterationVar2 + 1
-                            return  namee
+                                    iteratevalue + 1
 
-                        CallCommand = (lambda: itemButtonCall(namex))
+                                    if ItemNumCalculation2 in itemInofoLoad:
+                                        newdata4 = itemInofoLoad[ItemNumCalculation2]["Title"]
+                                        print("test")
+                                        print("test " + newdata4)
+
+                            return  namee, iteratevalue
+
+                        CallCommand = (lambda: itemButtonCall(Itembutton.cget("text"), IterationVar2))
 
                         # creates the Buttons and lmbda function that sets the x
                         Itembutton = tk.Button(ItemInfoFrame, width=20, text=newdata, command=CallCommand)
-                        namex = Itembutton.cget("text")
-
+                        IterationVar2 = 0
 
 
                         Itembutton.pack()
