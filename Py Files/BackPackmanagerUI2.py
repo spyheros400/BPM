@@ -3,6 +3,7 @@
 import os
 import tkinter as tk
 import os.path as OS
+import time
 from tkinter import Menu
 from tkinter import *
 import xml.etree.cElementTree as ET
@@ -16,6 +17,7 @@ ItemIDNum = 0
 # global veriables
 Name = "NONAME"
 Namevar = ""
+iteratevalue = 0
 
 # function that starts the program.
 
@@ -263,37 +265,74 @@ def StartPerpperBackpackerMananger():
                     def buttoonCreation():
                         namex = "none"
 
-                        def itemButtonCall(namee, iteratevalue):
+
+                        def updatevar(definedvar):
+
+                            definedvar + -1
+                            print("defined var is = to " + definedvar)
+                            return definedvar
+
+
+                        def itemButtonCall(namee):
+
+                            print(namee)
 
                             with (open('Items.yaml', "r") as f):
                                 itemInofoLoad = pyaml.safe_load(f)
 
-                                # the value that increments
+
+                            #updatevar(iteratevalue)
 
 
-                                # Combines ItnerationVar and string Item
-                                ItemNumCalculation2 = "Item" + str(iteratevalue)
+                            # Combines ItnerationVar and string Item
+                            ItemNumCalculation2 = "Item" + str(iteratevalue)
+                            print("IC2 = " + ItemNumCalculation2)
 
+                            newdata2 = itemInofoLoad[ItemNumCalculation2]["Title"]
+
+
+                            def updatecaluclatestring():
+                                time.sleep(1)
+                                global findtitle
+                                global newdata2
+                                global iteratevalue
+                                global ItemNumCalculation
                                 findtitle = namee
-                                newdata2 = ItemNumCalculation2
-                                print(findtitle)
+                                ItemNumCalculation2 = "Item" + str(iteratevalue)
+                                newdata2 = itemInofoLoad[ItemNumCalculation2]["Title"]
+                                iteratevalue = iteratevalue + 1
+                                print("newdata" + newdata2)
+                                print("Iteratevalue" + str(iteratevalue))
+                                print("find title " + findtitle)
+
+
+                            updatecaluclatestring()
+
+
+                            print(namee)
+
+                            if findtitle == newdata2:
+                                print("testsuess")
+
+
+                                print(iteratevalue)
+                            else:
+                                start_time = time.time()
+                                end_time = start_time + 1
                                 while findtitle != newdata2:
 
+                                    updatecaluclatestring()
+                                    print("whilr" + findtitle)
 
-                                    iteratevalue + 1
+                                    if findtitle == newdata2:
+                                        print("testsuess")
+                                        break
 
-                                    if ItemNumCalculation2 in itemInofoLoad:
-                                        newdata4 = itemInofoLoad[ItemNumCalculation2]["Title"]
-                                        print("test")
-                                        print("test " + newdata4)
-
-                            return  namee, iteratevalue
-
-                        CallCommand = (lambda: itemButtonCall(Itembutton.cget("text"), IterationVar2))
+                        CallCommand = (lambda: itemButtonCall(Itembutton.cget("text")))
 
                         # creates the Buttons and lmbda function that sets the x
                         Itembutton = tk.Button(ItemInfoFrame, width=20, text=newdata, command=CallCommand)
-                        IterationVar2 = 0
+
 
 
                         Itembutton.pack()
